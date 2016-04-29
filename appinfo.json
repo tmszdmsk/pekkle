@@ -7,12 +7,15 @@
   "sdkVersion": "3",
   "targetPlatforms": ["basalt"],
   "enableMultiJS": true,
+    "projectType": "pebblejs",
   "watchapp": {
     "watchface": false
   },
   "appKeys": {
     "PebbleJSAppStarted": 0,
-    "TimetableRequested": 1
+    "TimetableRequested": 1,
+    "StopFound": 2,
+    "StopDistance": 3
   },
   "resources": {
     "media": []

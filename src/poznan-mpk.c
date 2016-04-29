@@ -1,5 +1,6 @@
 #include <pebble.h>
 #include "main/main.h"
+#include "stop/stop.h"
 #include "app_messages.h"
 
 static bool s_js_ready = false;
@@ -37,6 +38,13 @@ static void inbox_received_handler(DictionaryIterator *iter, void *context) {
     requestTimetable();
     APP_LOG(APP_LOG_LEVEL_INFO,"ready");
     s_js_ready = true;
+  }
+
+  Tuple *stopFound_tuple = dict_find(iter, StopFound);
+  Tuple *stopDistance_tuple = dict_find(iter, StopDistance);
+  if(stopFound_tuple && stopDistance_tuple){
+    window_stack_pop(false);
+    stop_window_push(stopFound_tuple->value->cstring, stopDistance_tuple->value->int32);
   }
 }
 

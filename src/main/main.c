@@ -32,5 +32,5 @@ void main_window_push() {
       .unload = window_unload,
     });
   }
-  window_stack_push(s_window, false);
+  window_stack_push(s_window, true);
 }
