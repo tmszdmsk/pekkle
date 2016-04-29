@@ -13,8 +13,9 @@ Pebble.addEventListener('appmessage', function (e) {
     bus_stops.loadBusStops(position, function(stops){
       console.log('stops returned');
       Pebble.sendAppMessage({
-        'StopFound': stops[0].przystanek.id,
-        'StopDistance': stops[0].distance
+        'StopName': stops[0].przystanek.properties.stop_name,
+        'StopDistance': stops[0].distance,
+        'StopId': stops[0].przystanek.id
       }, function(){console.log("stop sent")}, function(){console.log("stop sent failed")});
     })
   },{},{"enableHighAccuracy": true});

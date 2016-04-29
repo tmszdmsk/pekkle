@@ -2,4 +2,4 @@
 
 #include <pebble.h>
 
-void stop_window_push(char* lineName, int distance);
+void stop_window_push(char* stopName, int distance, char* id);

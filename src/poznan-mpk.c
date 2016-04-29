@@ -40,11 +40,16 @@ static void inbox_received_handler(DictionaryIterator *iter, void *context) {
     s_js_ready = true;
   }
 
-  Tuple *stopFound_tuple = dict_find(iter, StopFound);
+  Tuple *stopName_tuple = dict_find(iter, StopName);
   Tuple *stopDistance_tuple = dict_find(iter, StopDistance);
-  if(stopFound_tuple && stopDistance_tuple){
+  Tuple *stopId_tuple = dict_find(iter, StopId);
+  if(stopName_tuple && stopDistance_tuple && stopId_tuple){
     window_stack_pop(false);
-    stop_window_push(stopFound_tuple->value->cstring, stopDistance_tuple->value->int32);
+    stop_window_push(
+        stopName_tuple->value->cstring,
+        stopDistance_tuple->value->int32,
+        stopId_tuple->value->cstring
+     );
   }
 }
 

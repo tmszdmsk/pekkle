@@ -5,6 +5,7 @@
 static Window *s_window;
 static char* stopName;
 static int distance;
+static char* stopId;
 static TextLayer *s_time_layer;
 
 static void window_load(Window *window) {
@@ -14,7 +15,10 @@ static void window_load(Window *window) {
   s_time_layer = text_layer_create(bounds);
   char dist_s[10];
   snprintf(dist_s, sizeof(dist_s), "%d", distance);
-  text_layer_set_text(s_time_layer, strcat(strcat(stopName, " "), strcat(dist_s, "m")));
+  text_layer_set_text(s_time_layer,
+    strcat(strcat(stopId, " "),strcat(strcat(stopName, " "), strcat(dist_s, "m")))
+  );
+  text_layer_set_font(s_time_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD));
   layer_add_child(window_layer, text_layer_get_layer(s_time_layer));
   APP_LOG(APP_LOG_LEVEL_INFO, "stop window loaded");
 }
@@ -24,10 +28,11 @@ static void window_unload(Window *window) {
   APP_LOG(APP_LOG_LEVEL_INFO, "stop window unloaded");
 }
 
-void stop_window_push(char* stopNm, int dist){
+void stop_window_push(char* stopNm, int dist, char* stopId_a){
   if(!s_window){
     stopName = stopNm;
     distance = dist;
+    stopId = stopId_a;
     s_window = window_create();
     window_set_window_handlers(s_window, (WindowHandlers) {
       .load = window_load,
