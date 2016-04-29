@@ -1,5 +1,6 @@
 #include "main.h"
 #include <pebble.h>
+#include "../app_messages.h"
 
 static Window *s_window;
 
