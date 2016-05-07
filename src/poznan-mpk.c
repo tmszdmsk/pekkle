@@ -4,7 +4,6 @@
 #include "app_messages.h"
 
 static bool s_js_ready = false;
-
 static void requestTimetable(){
       // Declare the dictionary's iterator
     DictionaryIterator *out_iter;
@@ -80,7 +79,6 @@ static void init_messaging(){
   app_message_register_outbox_failed(outbox_failed_callback);
   app_message_register_outbox_sent(outbox_sent_callback);
 }
-
 
 void init(){
   main_window_push();
