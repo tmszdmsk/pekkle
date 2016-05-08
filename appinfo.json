@@ -1,24 +1,46 @@
 {
-  "uuid": "b15d0c61-455c-45b3-8e71-f9a3cc649303",
-  "shortName": "poznan-mpk",
-  "longName": "poznan-mpk",
-  "companyName": "MakeAwesomeHappen",
-  "versionLabel": "1.0",
-  "sdkVersion": "3",
-  "targetPlatforms": ["basalt"],
-  "enableMultiJS": true,
+    "appKeys": {},
+    "capabilities": [
+        "location"
+    ],
+    "companyName": "MakeAwesomeHappen",
+    "longName": "poznan-mpk",
     "projectType": "pebblejs",
-  "watchapp": {
-    "watchface": false
-  },
-  "appKeys": {
-    "PebbleJSAppStarted": 0,
-    "TimetableRequested": 1,
-    "StopName": 2,
-    "StopDistance": 3,
-    "StopId": 4
-  },
-  "resources": {
-    "media": []
-  }
+    "resources": {
+        "media": [
+            {
+                "file": "images/menu_icon.png",
+                "menuIcon": true,
+                "name": "IMAGE_MENU_ICON",
+                "type": "bitmap"
+            },
+            {
+                "file": "images/logo_splash.png",
+                "name": "IMAGE_LOGO_SPLASH",
+                "type": "bitmap"
+            },
+            {
+                "file": "images/tile_splash.png",
+                "name": "IMAGE_TILE_SPLASH",
+                "type": "bitmap"
+            },
+            {
+                "file": "fonts/UbuntuMono-Regular.ttf",
+                "name": "MONO_FONT_14",
+                "type": "font"
+            }
+        ]
+    },
+    "sdkVersion": "3",
+    "shortName": "poznan-mpk",
+    "targetPlatforms": [
+        "basalt"
+    ],
+    "uuid": "b15d0c61-455c-45b3-8e71-f9a3cc649303",
+    "versionCode": 1,
+    "versionLabel": "1.0",
+    "watchapp": {
+        "hiddenApp": false,
+        "watchface": false
+    }
 }
