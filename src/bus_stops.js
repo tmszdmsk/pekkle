@@ -1,4 +1,5 @@
 var Q = require('q');
+var settings = require('settings');
 if (typeof(Number.prototype.toRadians) === "undefined") {
   Number.prototype.toRadians = function() {
     return this * Math.PI / 180;
@@ -23,8 +24,13 @@ var measure_distance = function(a,b){
 }
 
 var loadBusStops = function(){
-  console.log('loading bus stops');
+  console.log('loading bus stops');  
   var deferred = Q.defer();
+  var stops_cache = settings.data('stops_cache');
+  if(stops_cache){
+    console.log('returning stops from cache');
+    deferred.resolve(stops_cache);
+  }
   var method = 'GET';
   var url = 'http://www.poznan.pl/mim/plan/map_service.html?mtype=pub_transport&co=cluster';
 
@@ -34,6 +40,7 @@ var loadBusStops = function(){
   request.onload = function() {
     console.log('bus stops loaded');
     var przystanki = JSON.parse(this.responseText);
+    settings.data('stops_cache', przystanki);
     deferred.resolve(przystanki);
   };
 

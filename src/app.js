@@ -48,35 +48,35 @@ sortedStops.then(function(stops){
   });
   menu.on('select', function(selected){
     var aggregate = selected.item.aggregate;
-    var stopWindow = new UI.Card({"title": aggregate.name, "scrollable": true, "body": "LOADING"});
+    var stopWindow = new UI.Menu({
+      "sections": [
+        {
+          "title": aggregate.name,
+          "items": [
+            {"title": "loading..."}
+          ]
+        }
+      ]
+    });
     stopWindow.show();
     Q.all(aggregate.stops.map(function(stop){return busStops.scheduleInfo(stop.id);}))
     .then(function(stopsSchedules){
-      var content = _.flatten(stopsSchedules.map(function(schedule){
-        return schedule.success.times.map(function(singleTime){
-          return singleTime.line+"->"+singleTime.direction+": "+singleTime.minutes+"min";
-        });
-      })).join("\n");
-      stopWindow.body(content);
+      console.log("got schedules");
+      var itemz = _.chain(stopsSchedules).map(function(schedule){
+        return schedule.success.times;
+      })
+      .flatten()
+      .sortBy('minutes')
+      .map(function(time){
+        return {
+          "title": time.line+" "+time.minutes+"min",
+          "subtitle": "-> "+time.direction
+        };
+      }).value();
+      console.log(JSON.stringify(itemz));
+      stopWindow.items(0, itemz);
     }).done();
   });
   splashScreen.hide();
   menu.show();
 }).done();
-
-// Q.all([closestStop, scheduleInfo])
-// .spread(function(closestStop, scheduleInfo){
-//   console.log('stops returned');
-//   console.log(JSON.stringify(closestStop));
-//   console.log(JSON.stringify(scheduleInfo));
-//   var closestBusStopInfo = new UI.Card({
-//     "title": closestStop.przystanek.properties.stop_name,
-//     "subtitle": closestStop.distance+"m",
-//     "scrollable": true,
-//     "body": scheduleInfo.success.times.map(function(singleTime){
-//       return singleTime.line+"->"+singleTime.direction+": "+singleTime.minutes+"min";
-//     }).reduce(function(prev, elem){return prev+elem+"\n";}, "")
-//   });
-//   closestBusStopInfo.show();
-//   splashScreen.hide();
-// }).done();
