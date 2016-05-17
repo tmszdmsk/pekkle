@@ -3,6 +3,7 @@ var Q = require('q');
 var location = require('location');
 var UI = require('ui');
 var _ = require('underscore');
+var singleStop = require('single_stop');
 
 var splashScreen = new UI.Card({
   "banner": "IMAGE_PEKKLE_ICON",
@@ -34,7 +35,7 @@ sortedStops.then(function(stops){
     }
     return all;
   }, []);
-  
+
   var menu = new UI.Menu({
     "sections": [{
       "items": _.first(stopAggregates,10).map(function(aggragate){
@@ -46,37 +47,7 @@ sortedStops.then(function(stops){
       })
     }]
   });
-  menu.on('select', function(selected){
-    var aggregate = selected.item.aggregate;
-    var stopWindow = new UI.Menu({
-      "sections": [
-        {
-          "title": aggregate.name,
-          "items": [
-            {"title": "loading..."}
-          ]
-        }
-      ]
-    });
-    stopWindow.show();
-    Q.all(aggregate.stops.map(function(stop){return busStops.scheduleInfo(stop.id);}))
-    .then(function(stopsSchedules){
-      console.log("got schedules");
-      var itemz = _.chain(stopsSchedules).map(function(schedule){
-        return schedule.success.times;
-      })
-      .flatten()
-      .sortBy('minutes')
-      .map(function(time){
-        return {
-          "title": time.line+" "+time.minutes+"min",
-          "subtitle": "-> "+time.direction
-        };
-      }).value();
-      console.log(JSON.stringify(itemz));
-      stopWindow.items(0, itemz);
-    }).done();
-  });
+  menu.on('select', function(selected) {singleStop.openWindow(selected.item.aggregate)});
   splashScreen.hide();
   menu.show();
 }).done();
