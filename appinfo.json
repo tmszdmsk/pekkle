@@ -7,8 +7,23 @@
     "longName": "Live schedule of buses and trams in Pozna\u0144",
     "projectType": "pebblejs",
     "resources": {
-        "media": [
-        ]
+      "media": [
+        {
+          "file": "images/logo_splash.png",
+          "name": "IMAGE_LOGO_SPLASH",
+          "type": "bitmap"
+        },
+        {
+          "file": "images/tile_splash.png",
+          "name": "IMAGE_TILE_SPLASH",
+          "type": "bitmap"
+        },
+        {
+          "file": "fonts/UbuntuMono-Regular.ttf",
+          "name": "MONO_FONT_14",
+          "type": "font"
+        }
+      ]
     },
     "sdkVersion": "3",
     "shortName": "pekkle",
@@ -19,7 +34,7 @@
     ],
     "uuid": "b15d0c61-455c-45b3-8e71-f9a3cc649303",
     "versionCode": 1,
-    "versionLabel": "1.1-SNAPSHOT",
+    "versionLabel": "1.1",
     "watchapp": {
         "hiddenApp": false,
         "watchface": false
