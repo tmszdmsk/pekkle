@@ -41,12 +41,11 @@ var loadBusStops = function(){
     'type': 'json'
   }, function(response){
     console.log('bus stops loaded');
-    settings.data('stops_cache', stops);
+    settings.data('stops_cache', response);
     deferred.resolve(response);
-  }, function(error){
+  }, function(error, response){
     console.log('error while loading bus stops');
-    console.log(error);
-    deferred.reject(error);
+    deferred.reject("Error while downlading stops, "+JSON.stringify([error,response]));
   })
   return deferred.promise;
 };
@@ -73,9 +72,9 @@ var pekaInfo = function(busStopId){
   }, function(responseText){
     console.log('pekaInfo reponse');
     deferred.resolve(JSON.parse(responseText));
-  }, function(error){
+  }, function(error, response){
     console.log('error downloading stop timetable');
-    deferred.reject(error);
+    deferred.reject("Error while downlading stop timetables, "+JSON.stringify([error,response]));
   });
   return deferred.promise;
 }

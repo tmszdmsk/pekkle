@@ -7,16 +7,11 @@ var singleStop = require('single_stop');
 var Vibe = require('ui/vibe');
 var Light = require('ui/light');
 var Feature = require('platform/feature');
+var ErrorCard = require('error_card');
 
 var sortedStops = Q.all([location.location(), busStops.busStops()])
-.spread(busStops.sortByDistance);
-var closestStop = sortedStops
-.then(function(allStops){
-  return allStops[0];
-});
-var scheduleInfo = closestStop.then(function(stop){return stop.przystanek.id;}).then(busStops.scheduleInfo);
-
-sortedStops.then(function(stops){
+.spread(busStops.sortByDistance)
+.then(function(stops){
   var stopAggregates = stops.map(function(stop){
     return {
       "name": stop.przystanek.properties.stop_name,
@@ -52,6 +47,6 @@ sortedStops.then(function(stops){
   Light.trigger();
 })
 .fail(function(error){
-
+  ErrorCard.showError(error);
 })
 .done();

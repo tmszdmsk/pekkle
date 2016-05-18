@@ -3,6 +3,7 @@ var Q = require('q');
 var _ = require('underscore');
 var busStops = require('bus_stops');
 var Feature = require('platform/feature');
+var ErrorCard = require('error_card');
 
 var openStopWindow = function(aggregate){
   var stopWindow = new UI.Menu({
@@ -32,7 +33,11 @@ var openStopWindow = function(aggregate){
       };
     }).value();
     stopWindow.items(0, itemz);
-  }).done();
+  })
+  .fail(function(error){
+    ErrorCard.showError(error);
+  })
+  .done();
 };
 
 this.exports = {
