@@ -5,11 +5,6 @@ var UI = require('ui');
 var _ = require('underscore');
 var singleStop = require('single_stop');
 
-var splashScreen = new UI.Card({
-  "banner": "IMAGE_PEKKLE_ICON",
-  "backgroundColor": "white"
-});
-splashScreen.show();
 var sortedStops = Q.all([location.location(), busStops.busStops()])
 .spread(busStops.sortByDistance);
 var closestStop = sortedStops
@@ -48,6 +43,5 @@ sortedStops.then(function(stops){
     }]
   });
   menu.on('select', function(selected) {singleStop.openWindow(selected.item.aggregate)});
-  splashScreen.hide();
   menu.show();
 }).done();
