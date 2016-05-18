@@ -48,4 +48,8 @@ sortedStops.then(function(stops){
   menu.show();
   Vibe.vibrate('short');
   Light.trigger();
-}).done();
+})
+.fail(function(error){
+
+})
+.done();

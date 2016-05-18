@@ -1,5 +1,7 @@
 var Q = require('q');
 var settings = require('settings');
+var ajax = require('ajax');
+
 if (typeof(Number.prototype.toRadians) === "undefined") {
   Number.prototype.toRadians = function() {
     return this * Math.PI / 180;
@@ -24,29 +26,28 @@ var measure_distance = function(a,b){
 }
 
 var loadBusStops = function(){
-  console.log('loading bus stops');  
+  console.log('loading bus stops');
   var deferred = Q.defer();
+
   var stops_cache = settings.data('stops_cache');
   if(stops_cache){
     console.log('returning stops from cache');
     deferred.resolve(stops_cache);
   }
-  var method = 'GET';
-  var url = 'http://www.poznan.pl/mim/plan/map_service.html?mtype=pub_transport&co=cluster';
 
-  // Create the request
-  var request = new XMLHttpRequest();
-  // Specify the callback for when the request is completed
-  request.onload = function() {
+  ajax({
+    'url': 'http://www.poznan.pl/mim/plan/map_service.html?mtype=pub_transport&co=cluster',
+    'method': 'GET',
+    'type': 'json'
+  }, function(response){
     console.log('bus stops loaded');
-    var przystanki = JSON.parse(this.responseText);
-    settings.data('stops_cache', przystanki);
-    deferred.resolve(przystanki);
-  };
-
-  // Send the request
-  request.open(method, url);
-  request.send();
+    settings.data('stops_cache', stops);
+    deferred.resolve(response);
+  }, function(error){
+    console.log('error while loading bus stops');
+    console.log(error);
+    deferred.reject(error);
+  })
   return deferred.promise;
 };
 
@@ -61,22 +62,21 @@ var closest = function(position, busStops){
 var pekaInfo = function(busStopId){
   var deferred = Q.defer();
   console.log("pekaInfo in");
-  var method = 'POST';
-  var url = 'https://www.peka.poznan.pl/vm/method.vm';
-  // Create the request
-  var request = new XMLHttpRequest();
-  request.onload = function() {
-    console.log('pekaInfo response');
-    deferred.resolve(JSON.parse(this.responseText));
-  };
-  request.onerror = function() {
-    console.log("errror peka");
-  };
-
-  // Send the request
-  request.open(method, url, true);
-  request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  request.send('method=getTimes&p0=%7B%22symbol%22%3A%22'+busStopId+'%22%7D');
+  ajax({
+    'url':'https://www.peka.poznan.pl/vm/method.vm',
+    'method': 'POST',
+    'type': undefined,
+    'data': {
+      'method': 'getTimes',
+      'p0':"{'symbol':'"+busStopId+"'}"
+    }
+  }, function(responseText){
+    console.log('pekaInfo reponse');
+    deferred.resolve(JSON.parse(responseText));
+  }, function(error){
+    console.log('error downloading stop timetable');
+    deferred.reject(error);
+  });
   return deferred.promise;
 }
 

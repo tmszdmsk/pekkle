@@ -3,10 +3,14 @@ var Q = require('q');
 var location = function() {
   console.log('location requested');
   var deferred = Q.defer();
-  window.navigator.geolocation.getCurrentPosition(function(location){
-    console.log('location returned');
-    deferred.resolve(location);
-  });
+  navigator.geolocation.getCurrentPosition(
+    function(location){
+      deferred.resolve(location);
+    },
+    function(error){
+      deferred.reject(error);
+    }
+  );
   return deferred.promise;
 }
 
