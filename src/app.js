@@ -4,6 +4,7 @@ var location = require('location');
 var UI = require('ui');
 var _ = require('underscore');
 var singleStop = require('single_stop');
+var Vibe = require('ui/vibe');
 
 var sortedStops = Q.all([location.location(), busStops.busStops()])
 .spread(busStops.sortByDistance);
@@ -44,4 +45,5 @@ sortedStops.then(function(stops){
   });
   menu.on('select', function(selected) {singleStop.openWindow(selected.item.aggregate)});
   menu.show();
+  Vibe.vibrate('short');
 }).done();
