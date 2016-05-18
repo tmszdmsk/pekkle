@@ -2,9 +2,11 @@ var UI = require('ui');
 var Q = require('q');
 var _ = require('underscore');
 var busStops = require('bus_stops');
+var Feature = require('platform/feature');
 
 var openStopWindow = function(aggregate){
   var stopWindow = new UI.Menu({
+    "highlightBackgroundColor": Feature.color("islamic-green", "black"),
     "sections": [
       {
         "title": aggregate.name,

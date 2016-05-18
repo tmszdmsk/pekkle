@@ -6,6 +6,7 @@ var _ = require('underscore');
 var singleStop = require('single_stop');
 var Vibe = require('ui/vibe');
 var Light = require('ui/light');
+var Feature = require('platform/feature');
 
 var sortedStops = Q.all([location.location(), busStops.busStops()])
 .spread(busStops.sortByDistance);
@@ -34,6 +35,7 @@ sortedStops.then(function(stops){
   }, []);
 
   var menu = new UI.Menu({
+    "highlightBackgroundColor": Feature.color("islamic-green", "black"),
     "sections": [{
       "items": _.first(stopAggregates,10).map(function(aggragate){
         return {
