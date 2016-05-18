@@ -9,14 +9,14 @@
     "resources": {
       "media": [
         {
-          "file": "images/logo_splash.png",
+          "file": "images/pekkle_icon.png",
           "name": "IMAGE_LOGO_SPLASH",
-          "type": "bitmap"
+          "type": "png"
         },
         {
-          "file": "images/tile_splash.png",
+          "file": "images/pekkle_icon.png",
           "name": "IMAGE_TILE_SPLASH",
-          "type": "bitmap"
+          "type": "png"
         },
         {
           "file": "fonts/UbuntuMono-Regular.ttf",
