@@ -16,7 +16,7 @@
         {
           "file": "images/pekkle_icon.png",
           "name": "IMAGE_TILE_SPLASH",
-          "type": "png"
+          "type": "bitmap"
         },
         {
           "file": "fonts/UbuntuMono-Regular.ttf",
