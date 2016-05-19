@@ -5,5 +5,6 @@ wget -q https://github.com/pebble/pebblejs/archive/master.zip -O /tmp/pebblejs-m
 unzip  -o -q /tmp/pebblejs-master.zip -d ./dist
 cp ./appinfo.json ./dist/pebblejs-master/
 cp -r ./src/* ./dist/pebblejs-master/src/js/
-cp -r ./resources/images/* ./dist/pebblejs-master/resources/images/
+(cd ./resources/images; ./make_graphics.sh)
+cp -r ./resources/images/out/* ./dist/pebblejs-master/resources/images/
 alias pebble='function _pebble_alias(){ (cd ./dist/pebblejs-master/; pebble $@;) };_pebble_alias'
